@@ -1,5 +1,8 @@
+const moment = require("moment");
+moment.locale('ru');
+
 function addingEmployeesToTheArray() {
-    let vera = { name: "Бондарева Вера", age: 18, birthdays: Date('5 24') };
+    let vera = { name: "Бондарева Вера", birthdays: moment([2000, 8, 24]) };
     let vika = { name: "Васильева Виктория", age: 22, birthdays: Date('2 13') };
     let malika = { name: "Кузнецова Малика", age: 34, birthdays: Date('7 16') };
     let anna = { name: "Петрова Анна", age: 19, birthdays: Date('7 28') };
@@ -10,11 +13,20 @@ function addingEmployeesToTheArray() {
     let dima = { name: "Попов Дмитрий", age: 46, birthdays: Date('1 18') };
     let alisa = { name: "Калмыкова Алиса", age: 29, birthdays: Date('11 6') };
     let veronika = { name: "Лобанова Вероника ", age: 82, birthdays: Date('12 6') };
-    
+
     let arrayOfEmployees = [vera, vika, malika, anna, maks, artem, lila, mark, dima, alisa, veronika];
-    console.log(arrayOfEmployees[1].birthdays.getMonth());
-    return arrayOfEmployees;
+
+    namnumberOfYearse(arrayOfEmployees);
+
 }
+
+function namnumberOfYearse(arrayOfEmployees) {
+    let str = arrayOfEmployees[0].birthdays.fromNow().toString();
+    let lastIndex = str.lastIndex(" ");
+    str = str.substring(0, lastIndex);
+    console.log(str);
+}
+
 function sortByMonth() {
     let arrayOfEmployees = addingEmployeesToTheArray();
     let arr = [];
