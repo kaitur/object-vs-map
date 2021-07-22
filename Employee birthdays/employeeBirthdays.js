@@ -16,15 +16,15 @@ function addingEmployeesToTheArray() {
 
     let arrayOfEmployees = [vera, vika, malika, anna, maks, artem, lila, mark, dima, alisa, veronika];
 
-    namnumberOfYearse(arrayOfEmployees);
+    namnumberOfYearse(arrayOfEmployees, 0);
 
 }
 
-function namnumberOfYearse(arrayOfEmployees) {
-    let str = arrayOfEmployees[0].birthdays.fromNow().toString();
-    let lastIndex = str.lastIndex(" ");
-    str = str.substring(0, lastIndex);
-    console.log(str);
+function namnumberOfYearse(arrayOfEmployees, n) {
+    let str = arrayOfEmployees[n].birthdays.fromNow();
+    let newStr = String(str.slice(0, -6));
+    console.log(newStr);
+    return newStr;
 }
 
 function sortByMonth() {
