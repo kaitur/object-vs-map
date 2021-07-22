@@ -1,36 +1,75 @@
 const moment = require("moment");
-moment.locale('ru');
+
+let monthInAdvance = 11;
+let currentYear = moment().year();
+let currentMonth = moment().month();
+let currentDay = moment().date();
 
 function addingEmployeesToTheArray() {
-    let vera = { name: "Бондарева Вера", birthdays: moment([2000, 8, 24]) };
-    let vika = { name: "Васильева Виктория", age: 22, birthdays: Date('2 13') };
-    let malika = { name: "Кузнецова Малика", age: 34, birthdays: Date('7 16') };
-    let anna = { name: "Петрова Анна", age: 19, birthdays: Date('7 28') };
-    let maks = { name: "Белов Максим", age: 48, birthdays: Date('5 3') };
-    let artem = { name: "Федосеев Артём", age: 28, birthdays: Date('2 1') };
-    let lila = { name: "Овчинникова Лиля", age: 37, birthdays: Date('5 13') };
-    let mark = { name: "Емельянов Марк", age: 55, birthdays: Date('12 27') };
-    let dima = { name: "Попов Дмитрий", age: 46, birthdays: Date('1 18') };
-    let alisa = { name: "Калмыкова Алиса", age: 29, birthdays: Date('11 6') };
-    let veronika = { name: "Лобанова Вероника ", age: 82, birthdays: Date('12 6') };
+    let vera = { name: "Бондарева Вера", birthdays: moment([2000, 6, 20]) };
+    let vika = { name: "Васильева Виктория", birthdays: moment([1989, 5, 12]) };
+    let malika = { name: "Кузнецова Малика", birthdays: moment([1981, 4, 12]) };
+    let anna = { name: "Петрова Анна", birthdays: moment([1973, 1, 5]) };
+    let maks = { name: "Белов Максим", birthdays: moment([1984, 1, 7]) };
+    let artem = { name: "Федосеев Артём", birthdays: moment([1971, 1, 28]) };
+    let lila = { name: "Овчинникова Лиля", birthdays: moment([1973, 1, 17]) };
+    let mark = { name: "Емельянов Марк", birthdays: moment([1995, 1, 8]) };
+    let dima = { name: "Попов Дмитрий", birthdays: moment([1986, 1, 4]) };
+    let alisa = { name: "Калмыкова Алиса", birthdays: moment([1998, 1, 25]) };
+    let veronika = { name: "Лобанова Вероника", birthdays: moment([1977, 1, 6]) };
 
     let arrayOfEmployees = [vera, vika, malika, anna, maks, artem, lila, mark, dima, alisa, veronika];
-
-    namnumberOfYearse(arrayOfEmployees, 0);
-
+    displayOfTheMonthInText(arrayOfEmployees, 0);
+    numberOfYearse(arrayOfEmployees, 0);
+    return arrayOfEmployees;
 }
 
-function namnumberOfYearse(arrayOfEmployees, n) {
-    let str = arrayOfEmployees[n].birthdays.fromNow();
-    let newStr = String(str.slice(0, -6));
-    console.log(newStr);
-    return newStr;
+function numberOfYearse(arrayOfEmployees, n) {
+    let numOfYearse = currentYear - arrayOfEmployees[n].birthdays.year();
+    return moment().month() <= arrayOfEmployees[n].birthdays.month() ? numOfYearse : ++numOfYearse;
 }
 
-function sortByMonth() {
+function displayOfTheMonthInText(arrayOfEmployees, n) {
+    let monthInText = arrayOfEmployees[n].birthdays.locale('ru').format('MMMM');
+    return monthInText[0].toUpperCase() + monthInText.slice(1);
+}
+function displayOfTheMonthInText(i) {
+    let month = moment().add(i, 'month').locale('ru').format('MMMM');
+    let monthInText = month[0].toUpperCase() + month.slice(1);
+    return monthInText;
+}
+function displayOfTheYear(i) {
+    return currentMonth + i <= 11 ? currentYear : currentYear + 1;
+}
+
+function sortByMonth(ii) {
+    if(ii == 11)
     let arrayOfEmployees = addingEmployeesToTheArray();
-    let arr = [];
-    arr = arrayOfEmployees.sort((a, b) => a.birthdays.getMonth() > b.birthdays.getMonth() ? 1 : -1);
-    return arr;
+    const sortedArray = arrayOfEmployees.sort((a, b) => { return moment(a.birthdays.month()).diff(b.birthdays.month()) });
+    let oneMonthArray = [];
+    let count = 0;
+    for (let i = 0; i < sortedArray.length; i++) {
+        if (sortedArray[i].birthdays.month() == currentMonth + ii) {
+            oneMonthArray[count] = sortedArray[i];
+            count++;
+        }
+    }
+    return oneMonthArray;
 }
+function consoleOutput() {
+    for (let i = 0; i <= monthInAdvance; i++) {
+        let oneMonthArray = sortByMonth(i);
+        let text = `${displayOfTheMonthInText(i)} ${displayOfTheYear(i)}`;
+        console.log(text);
+        for (let index = oneMonthArray.length -1; index >= 0 ; index--) {
+            let text_2 = `(${oneMonthArray[index].birthdays.date()}) - ${oneMonthArray[index].name} (${numberOfYearse(oneMonthArray, index)})`; //(${numberOfYearse(sortByMonth(), 0)})`;
+            console.log(text_2);
+        }
+            
+        
+    }
+}
+consoleOutput();
 addingEmployeesToTheArray();
+
+//export { numberOfYearse as funcNumberOfYearse, displayOfTheMonthInText as funcDisplayOfTheMonthInText};

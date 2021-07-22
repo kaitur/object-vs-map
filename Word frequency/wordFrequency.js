@@ -27,3 +27,4 @@ function consoleOutput() {console.log(SearchForDuplicates(text));}
 consoleOutput();
 
 export {creatingAnArrayOfWords as funcOfCreating, stringReplacement as funcOfReplacement};
+
